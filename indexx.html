@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3D White Cylinder with Red Spikes Rotate 25°</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Science+Gothic:wght@100..900&display=swap');
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #ffffff;
+            /* White background */
+        }
+
+        /* buttons positioned at each side of the carousel */
+        .carousel .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid red;
+            color: red;
+            font-size: 26px;
+            cursor: pointer;
+            user-select: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .carousel .carousel-btn.left {
+            left: -80px;
+            top: 105%;
+        }
+
+        .carousel .carousel-btn.right {
+            right: -80px;
+            top: 105%;
+        }
+
+        /* keep hover style */
+        .carousel .carousel-btn:hover {
+            background-color: rgb(187, 74, 74);
+            color: white;
+            border-color: transparent;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        #rotateLeftBtn,
+        #rotateRightBtn {
+            /* fallback for direct ID usage (kept minimal) */
+            padding: 35px 35px;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            font-weight: 900;
+            border: none;
+            border: 1px solid red;
+            background-color: transparent;
+            color: red;
+        }
+
+
+        #rotateLeftBtn:hover,
+        #rotateRightBtn:hover {
+            background-color: rgb(255, 0, 0);
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+            border: none;
+        }
+
+
+
+        /* coverflow carousel above the cylinder */
+        .carousel {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            max-width: 1000px;
+            height: 260px;
+            overflow: visible;
+            z-index: 12;
+            border-radius: 8px;
+            background: transparent;
+            perspective: 1200px;
+            /* important for 3D */
+        }
+
+        .carousel-track {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            left: 50%;
+            top: 62%;
+            transform: translate(-50%, -50%);
+            transition: transform 0.6s cubic-bezier(.2, .9, .3, 1), opacity 0.45s;
+            will-change: transform, opacity;
+            cursor: pointer;
+            user-select: none;
+            width: 380px;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-slide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+            /* box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); */
+            pointer-events: none;
+        }
+
+        .carousel-slide h3 {
+            margin: 8px 0 0 0;
+            padding: 0;
+            color: #8f0000;
+            /* font-family: Arial, sans-serif; */
+            font-size: 1.2rem;
+            text-align: center;
+            pointer-events: none;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            font-family: Raleway, sans-serif;
+            font-family: "Science Gothic", sans-serif;
+        }
+
+        @media (min-width:0px) and (max-width:480px) {
+            .carousel {
+                height: 2px;
+            }
+
+            .carousel-slide {
+                width: 250px;
+                /* 380px * 1.4 */
+                height: 28px;
+                /* 220px * 1.4 */
+            }
+
+            .carousel-slide img {
+                max-height: 308px;
+                /* 220px * 1.4 */
+                border-radius: 10px;
+                /* box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); */
+                pointer-events: none;
+            }
+
+            #rotateLeftBtn,
+            #rotateRightBtn {
+                /* fallback for direct ID usage (kept minimal) */
+                padding: 0px 0px;
+                border-radius: 50%;
+                font-size: 25px;
+                cursor: pointer;
+                font-weight: 900;
+                border: none;
+                border: 1px solid red;
+                background-color: transparent;
+                color: red;
+            }
+
+            .carousel .carousel-btn.left {
+                left: -30px;
+                top: 60%;
+                font-weight: 100;
+            }
+
+            .carousel .carousel-btn.right {
+                right: -30px;
+                font-weight: 100;
+                top: 60%;
+            }
+
+            .carousel-slide h3 {
+                margin: 8px 0 0 0;
+                padding: 0;
+                color: #0f0f0f;
+                /* font-family: Arial, sans-serif; */
+                font-size: 1.25rem;
+                /* 1.1rem * 1.4 */
+                text-align: center;
+                pointer-events: none;
+                font-weight: 400;
+                letter-spacing: 0.5px;
+                /* font-family: Raleway, sans-serif; */
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- coverflow carousel sits above the 3D canvas -->
+    <div class="carousel" aria-label="Coverflow carousel">
+        <div class="carousel-track" role="list">
+
+            <div class="carousel-slide" role="listitem">
+                <h3>Subassemblies</h3>
+                <img src="media/gridimg04.png" alt="image 4">
+
+            </div>
+            <div class="carousel-slide" role="listitem">
+                <h3>Electrical steel laminations</h3>
+                <img src="media/gridimg01.png" alt="image 1">
+            </div>
+
+            <div class="carousel-slide" role="listitem">
+                <h3>Motor Cores</h3>
+                <img src="media/gridimg02.png" alt="image 2">
+            </div>
+
+            <div class="carousel-slide" role="listitem">
+                <h3>Casting</h3>
+                <img src="media/gridimg03.png" alt="image 3">
+            </div>
+
+
+
+
+
+            <div class="carousel-slide" role="listitem">
+                <h3>High-Precision Tools</h3>
+                <img src="media/gridimg07.png" alt="image 6">
+
+            </div>
+
+            <div class="carousel-slide" role="listitem">
+                <h3>Die-Cast Rotors</h3>
+                <img src="media/gridimg06.png" alt="image 5">
+
+            </div>
+        </div>
+
+        <!-- moved buttons into carousel so they sit each side -->
+        <button id="rotateLeftBtn" class="carousel-btn left" aria-label="Rotate left">&#8592;</button>
+        <button id="rotateRightBtn" class="carousel-btn right" aria-label="Rotate right">&#8594;</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
+
+    <script>
+        // --- coverflow carousel logic ---
+        const track = document.querySelector('.carousel-track');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        let slideIndex = 0;
+
+        function updateCoverflow() {
+            // show center + 4 neighbours (2 left, 2 right); hide rest
+            const spacing = 260;
+            const half = Math.floor(slides.length / 2);
+
+            slides.forEach((slide, i) => {
+                // normalize offset to handle wrap-around
+                let offset = i - slideIndex;
+                if (offset > half) offset -= slides.length;
+                if (offset < -half) offset += slides.length;
+                const absOffset = Math.abs(offset);
+
+                if (absOffset > 2) {
+                    // hide all other slides
+                    slide.style.visibility = 'hidden';
+                    slide.style.pointerEvents = 'none';
+                    slide.style.opacity = 0;
+                    slide.style.zIndex = 0;
+                } else if (absOffset === 2) {
+                    // second neighbours (2nd left/right)
+                    const secondScale = 0.3;
+                    slide.style.transform = `translate(-50%, -50%) translateX(${offset * spacing}px) rotateY(${offset * -20}deg) scale(${secondScale})`;
+                    slide.style.opacity = 0.3;
+                    slide.style.visibility = 'visible';
+                    slide.style.pointerEvents = 'auto';
+                    slide.style.zIndex = 50 - absOffset;
+                } else if (absOffset === 1) {
+                    // immediate neighbours (1st left/right)
+                    const neighborScale = 0.5;
+                    slide.style.transform = `translate(-50%, -50%) translateX(${offset * spacing}px) rotateY(${offset * -28}deg) scale(${neighborScale})`;
+                    slide.style.opacity = 0.6;
+                    slide.style.visibility = 'visible';
+                    slide.style.pointerEvents = 'auto';
+                    slide.style.zIndex = 50 - absOffset;
+                } else {
+                    // center slide — increase size to 1.5x
+                    const centerScale = 1.2;
+                    slide.style.transform = `translate(-50%, -50%) translateX(${offset * spacing}px) rotateY(${offset * -10}deg) scale(${centerScale})`;
+                    slide.style.opacity = 1;
+                    slide.style.visibility = 'visible';
+                    slide.style.pointerEvents = 'auto';
+                    slide.style.zIndex = 200;
+                }
+            });
+        }
+
+        function slideTo(index) {
+            slideIndex = (index + slides.length) % slides.length;
+            updateCoverflow();
+        }
+
+        // click on slide to center it or advance if already center
+        slides.forEach((s, i) => {
+            s.addEventListener('click', () => {
+                if (i === slideIndex) slideTo(slideIndex + 1);
+                else slideTo(i);
+            });
+        });
+
+        // initial render
+        updateCoverflow();
+        // --- end coverflow logic ---
+
+        // return scale factor: decrease size when width < 480px to 1/1.4 (~0.714)
+        function getCylinderScale() {
+            return window.innerWidth < 480 ? (1 / 0) : 1;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(-75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xffffff, 1);
+        document.body.appendChild(renderer.domElement);
+
+        // White cylinder material & mesh
+        const cylinderGeometry = new THREE.CylinderGeometry(2, 2, 0, 8); // base geometry
+        const cylinderMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 10 });
+        const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+        scene.add(cylinder);
+
+        // Red rectangular spikes group
+        const spikes = new THREE.Group();
+        const spikeGeometry = new THREE.BoxGeometry(0.2, 0.7, 0.2);
+        const spikeMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const spikeCount = 32;
+        const radius = 3;
+
+        for (let i = 0; i < spikeCount; i++) {
+            const spike = new THREE.Mesh(spikeGeometry, spikeMaterial);
+            const angle = (i / spikeCount) * Math.PI * 2;
+            spike.position.x = radius * Math.cos(angle);
+            spike.position.z = radius * Math.sin(angle);
+            spike.position.y = 1.5 + 0.35;
+            spike.rotation.y = -angle;
+            spikes.add(spike);
+        }
+        scene.add(spikes);
+
+        // apply initial scale based on screen width (<480 => 1/1.4)
+        let currentScale = getCylinderScale();
+        cylinder.scale.set(currentScale, currentScale, currentScale);
+        spikes.scale.set(currentScale, currentScale, currentScale);
+
+        // Lighting for proper colors and shading
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight("white", 0.8);
+        directionalLight.position.set(5, 10, 7.5);
+        scene.add(directionalLight);
+
+        // Camera position
+        camera.position.z = 7 * currentScale;
+
+        // Rotation control variables
+        const rotationStep = 22 * Math.PI / 180; // 22 degrees in radians
+        let targetRotation = 0;
+        let currentRotation = 0;
+        let isRotating = false;
+
+        function requestRotation(delta) {
+            if (!isRotating) {
+                targetRotation += delta;
+                isRotating = true;
+            }
+        }
+
+        // Button event listeners
+        document.getElementById('rotateLeftBtn').addEventListener('click', () => {
+            requestRotation(-rotationStep);
+            slideTo(slideIndex - 1);
+        });
+        document.getElementById('rotateRightBtn').addEventListener('click', () => {
+            requestRotation(rotationStep);
+            slideTo(slideIndex + 1);
+        });
+
+        // Animation loop for smooth rotation
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if (isRotating) {
+                const delta = 0.02; // rotation speed (radians per frame)
+                let diff = targetRotation - currentRotation;
+
+                if (Math.abs(diff) <= delta) {
+                    currentRotation = targetRotation;
+                    isRotating = false;
+                } else {
+                    currentRotation += delta * Math.sign(diff);
+                }
+
+                cylinder.rotation.y = currentRotation;
+                spikes.rotation.y = currentRotation;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            // reflow coverflow on resize
+            updateCoverflow();
+            // update cylinder/spikes scale and camera when crossing 480px threshold
+            const newScale = getCylinderScale();
+            if (Math.abs(newScale - currentScale) > 1e-6) {
+                currentScale = newScale;
+                cylinder.scale.set(currentScale, currentScale, currentScale);
+                spikes.scale.set(currentScale, currentScale, currentScale);
+                camera.position.z = 7 * currentScale;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
